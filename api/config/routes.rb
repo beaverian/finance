@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   # API namespace for versioning and multi-tenant admin functionalities
   namespace :api do
     namespace :v1 do
+      post 'login', to: 'sessions#create'
+      post 'register', to: 'registrations#create'
       namespace :admin do
         resources :users, only: [:index, :show, :create, :update, :destroy]
         resource :settings, only: [:show, :update]
@@ -19,3 +21,4 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 end
+

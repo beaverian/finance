@@ -41,10 +41,11 @@ group :development, :test do
 end
 
 # New gems added
-#gem 'acts_as_tenant'
 gem 'multitenant'
 gem 'devise'
 gem 'devise-jwt'
 gem 'cancancan'
 gem 'rolify'
+gem 'rack-cors'
+
 
