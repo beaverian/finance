@@ -5,6 +5,17 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
+  # API namespace for versioning and multi-tenant admin functionalities
+  namespace :api do
+    namespace :v1 do
+      namespace :admin do
+        resources :users, only: [:index, :show, :create, :update, :destroy]
+        resource :settings, only: [:show, :update]
+        # You can add more routes here for AR/AP system
+      end
+    end
+  end
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
