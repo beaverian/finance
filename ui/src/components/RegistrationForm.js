@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import ToastMessage from './ToastMessage';
 
 const RegistrationForm = () => {
   // State hooks for form fields and message
@@ -10,6 +11,7 @@ const RegistrationForm = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [message, setMessage] = useState('');
   const [variant, setVariant] = useState('success');
+  const [showToast, setShowToast] = useState(false);
 
   /**
    * Handles form submission.
@@ -26,7 +28,11 @@ const RegistrationForm = () => {
       setMessage(response.data.message);
       setVariant('success');
     } catch (error) {
-      setMessage(error.response.data.errors.join(', '));
+      if (error.response && error.response.data && error.response.data.errors) {
+        setMessage(error.response.data.errors.join(', '));
+      } else {
+        setMessage('An unexpected error occurred.');
+      }
       setVariant('danger');
     }
   };
