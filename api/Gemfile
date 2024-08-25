@@ -47,5 +47,7 @@ gem 'devise-jwt'
 gem 'cancancan'
 gem 'rolify'
 gem 'rack-cors'
+gem 'jwt'
+gem 'bcrypt', '~> 3.1.7'
 
 

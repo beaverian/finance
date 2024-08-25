@@ -4,6 +4,9 @@
 class User < ApplicationRecord
     include MultitenancyModule
   
+    # Secure password handling
+    has_secure_password
+
     # Associations
     belongs_to :tenant
     
@@ -16,4 +19,12 @@ class User < ApplicationRecord
   
     # Multitenancy setup
     multitenant :tenant
+
+    # Generates a JWT token for the user.
+    # The token is generated with the user's ID and an expiration time of 60 days.
+    #
+    # @return [String] JWT token
+    def generate_jwt
+      JWT.encode({ id: id, exp: 60.days.from_now.to_i }, Rails.application.credentials.secret_key_base)
+    end
   end
