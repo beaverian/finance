@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import API from '../services/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [variant, setVariant] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -14,13 +16,19 @@ const Login = () => {
       const response = await API.post('/login', { email, password });
       if (response.data.token) {
         localStorage.setItem('authToken', response.data.token);
-        navigate('/admin');
+        setMessage('Login successful! Redirecting to the admin dashboard...');
+        setVariant('success');
+        setTimeout(() => {
+          navigate('/admin');
+        }, 1500);
       } else {
-        alert('Login failed. Please check your credentials.');
+        setMessage('Login failed. Please check your credentials.');
+        setVariant('danger');
       }
     } catch (error) {
       console.error('Login error', error);
-      alert('An error occurred during login.');
+      setMessage('An error occurred during login. Please try again later.');
+      setVariant('danger');
     }
   };
 
@@ -29,6 +37,7 @@ const Login = () => {
       <Row className="justify-content-md-center">
         <Col md={4}>
           <h2>Login</h2>
+          {message && <Alert variant={variant}>{message}</Alert>}
           <Form onSubmit={handleLogin}>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -52,9 +61,12 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" block>
-              Login
-            </Button>
+            {/* Wrap the button in a div for better formatting */}
+            <div className="d-grid gap-2">
+              <Button variant="primary" type="submit">
+                Login
+              </Button>
+            </div>
           </Form>
         </Col>
       </Row>
