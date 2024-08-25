@@ -47,5 +47,6 @@ gem 'devise-jwt'
 gem 'cancancan'
 gem 'rolify'
 gem 'rack-cors'
+gem 'jwt'
 
 

@@ -304,6 +304,7 @@ DEPENDENCIES
   debug
   devise
   devise-jwt
+  jwt
   multitenant
   puma (>= 5.0)
   rack-cors
